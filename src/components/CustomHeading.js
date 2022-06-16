@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import FONTS from '../global/FONTS'
+import COLORS from '../global/COLORS'
 
 const H1 = ({ children, customStyle }) => {
   return (
@@ -45,36 +46,43 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.OpenSansBold,
     fontSize: 28,
     letterSpacing: 0,
-    lineHeight: 33.6
+    lineHeight: 33.6,
+    color: COLORS.white
   },
   h2Style: {
     fontFamily: FONTS.OpenSansBold,
     fontSize: 24,
     letterSpacing: 0,
-    lineHeight: 33.6
+    lineHeight: 33.6,
+    color: COLORS.white
   },
   h3Style: {
     fontFamily: FONTS.OpenSansBold,
     fontSize: 20,
     letterSpacing: 0,
-    lineHeight: 24
+    lineHeight: 24,
+    color: COLORS.white
   },
   h4Style: {
     fontFamily: FONTS.OpenSansBold,
     fontSize: 16,
     letterSpacing: 0,
-    lineHeight: 19.2
+    lineHeight: 19.2,
+    color: COLORS.white
   },
   h5Style: {
     fontFamily: FONTS.OpenSansBold,
     fontSize: 14,
     letterSpacing: 0,
-    lineHeight: 21
+    lineHeight: 21,
+    color: COLORS.white
   },
   h6Style: {
     fontFamily: FONTS.OpenSansRegular,
     fontSize: 10,
     letterSpacing: 0,
-    lineHeight: 21
+    lineHeight: 21,
+    color: COLORS.white,
+    opacity: 0.6
   },
 })

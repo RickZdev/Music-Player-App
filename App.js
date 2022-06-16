@@ -1,7 +1,8 @@
 import 'react-native-gesture-handler'
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font'
+import { NavigationContainer } from '@react-navigation/native';
+import TopTab from './src/navigation/TopTab';
 
 export default function App() {
 
@@ -12,10 +13,9 @@ export default function App() {
   }); if (!loaded) return null;
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Text> Welcome </Text>
-    </View>
+    <NavigationContainer>
+      <TopTab />
+    </NavigationContainer>
   );
 }
 
