@@ -53,8 +53,7 @@ const CategoryCard = ({ data, index }) => {
         source={require('../assets/images/featured-song.png')}
         resizeMode='contain'
         style={styles.cardImage}
-      >
-      </ImageBackground>
+      />
       <View style={styles.cardSongDescription}>
         <H5>{data.songTitle}</H5>
         <H6>{data.singer} | {data.headerTitle} | {data.releasedDate}</H6>

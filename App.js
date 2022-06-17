@@ -1,8 +1,10 @@
 import 'react-native-gesture-handler'
-import { StyleSheet } from 'react-native';
-import { useFonts } from 'expo-font'
+import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import TopTab from './src/navigation/TopTab';
+import { useFonts } from 'expo-font'
+
+import { HomeStack } from './src/navigation/AppStack';
+import COLORS from './src/global/COLORS';
 
 export default function App() {
 
@@ -13,17 +15,18 @@ export default function App() {
   }); if (!loaded) return null;
 
   return (
-    <NavigationContainer>
-      <TopTab />
-    </NavigationContainer>
+    <View style={styles.container}>
+      <NavigationContainer>
+        <HomeStack />
+      </NavigationContainer>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  // wrap view container to navigation container to remove the flashing white when switching screens
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    flex: 1, backgroundColor:
+      COLORS.background
+  }
+})

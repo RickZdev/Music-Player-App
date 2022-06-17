@@ -1,11 +1,11 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import React from 'react'
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 import COLORS from '../global/COLORS'
 import { H3, H5 } from './CustomHeading'
 
-const FavouriteArtistList = () => {
+const FavouriteArtistList = ({ navigation }) => {
 
   const tempData = [
     {
@@ -36,9 +36,9 @@ const FavouriteArtistList = () => {
       <View style={styles.listContainerWrapper}>
         <H3 customStyle={styles.listHeaderTitle}>Favourite Artist</H3>
         {tempData.map((item, index) => (
-          <View key={index}>
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('ArtistScreen')}>
             <ArtistCard data={item} />
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>

@@ -33,7 +33,8 @@
     "react-native-screens": "~3.11.1",
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "0.17.7",
-    "react-native-pager-view": "5.4.15"
+    "react-native-pager-view": "5.4.15",
+    "expo-updates": "~0.13.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

@@ -25,7 +25,7 @@ const TopTab = () => {
           swipeEnabled: false,
           lazy: true,
           tabBarPressOpacity: 1,
-          tabBarPressColor: COLORS.background,
+          tabBarPressColor: COLORS.foreground,
         }}
       >
         <Tab.Screen name='HomeTab' component={HomeTab}
