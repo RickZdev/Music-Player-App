@@ -1,102 +1,76 @@
-import { Dimensions, FlatList, Image, StyleSheet, Text, View, ScrollView } from 'react-native'
+import { Dimensions, FlatList, Image, StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import COLORS from '../global/COLORS'
 import { H5, H6 } from './CustomHeading'
 import FONTS from '../global/FONTS'
 import { Entypo } from '@expo/vector-icons';
-
+import { useNavigation } from '@react-navigation/native'
 
 const SongsList = () => {
   const tempData = [
     {
       id: 1,
-      songTitle: 'Imagine Dragons',
-      singer: 'Cameron Williamson',
-      songImage: require('../assets/images/new-songs-1.png')
+      songTitle: 'Marlboro Black',
+      singer: 'Because',
+      songImage: require('../assets/images/new-songs-1.png'),
+      song: require('../assets/music/Because-Marlboro-Black.mp3')
     },
     {
       id: 2,
-      songTitle: 'Renaissance',
-      singer: 'Podval Caplella',
-      songImage: require('../assets/images/new-songs-2.png')
+      songTitle: 'Sandali',
+      singer: 'Because',
+      songImage: require('../assets/images/new-songs-2.png'),
+      song: require('../assets/music/Because-Sandali.mp3')
+
     },
     {
       id: 3,
-      songTitle: "Ivar's Revenge",
-      singer: 'Savannah Nguyen',
-      songImage: require('../assets/images/new-songs-3.png')
+      songTitle: "Araw-Araw",
+      singer: 'Ben&Ben',
+      songImage: require('../assets/images/new-songs-3.png'),
+      song: require('../assets/music/Ben&Ben-Araw-Araw.mp3')
+
     },
     {
       id: 4,
-      songTitle: 'What do you Mean?',
-      singer: 'Justin Bieber',
-      songImage: require('../assets/images/new-songs-1.png')
+      songTitle: 'Kathang-Isip',
+      singer: 'Ben&Ben',
+      songImage: require('../assets/images/new-songs-1.png'),
+      song: require('../assets/music/Ben&Ben-Kathang-Isip.mp3')
+
     },
     {
       id: 5,
-      songTitle: 'Mean It',
-      singer: 'LANY',
-      songImage: require('../assets/images/new-songs-3.png')
+      songTitle: 'Masyado Pang Maaga',
+      singer: 'Ben&Ben',
+      songImage: require('../assets/images/new-songs-3.png'),
+      song: require('../assets/music/Ben&Ben-Masyado-Pang-Maaga.mp3')
     },
     {
       id: 6,
-      songTitle: 'What do you Mean?',
-      singer: 'Justin Bieber',
-      songImage: require('../assets/images/new-songs-1.png')
+      songTitle: 'Sa Susunod Na Habang Buhay',
+      singer: 'Ben&Ben',
+      songImage: require('../assets/images/new-songs-1.png'),
+      song: require('../assets/music/Ben&Ben-Sa-Susunod-na-Habang-Buhay.mp3')
     },
-    {
-      id: 7,
-      songTitle: 'What do you Mean?',
-      singer: 'Justin Bieber',
-      songImage: require('../assets/images/new-songs-1.png')
-    },
-    {
-      id: 8,
-      songTitle: 'What do you Mean?',
-      singer: 'Justin Bieber',
-      songImage: require('../assets/images/new-songs-1.png')
-    },
-    {
-      id: 9,
-      songTitle: 'What do you Mean?',
-      singer: 'Justin Bieber',
-      songImage: require('../assets/images/new-songs-1.png')
-    },
-    {
-      id: 10,
-      songTitle: 'What do you Mean?',
-      singer: 'Justin Bieber',
-      songImage: require('../assets/images/new-songs-1.png')
-    },
-    {
-      id: 11,
-      songTitle: 'What do you Mean?',
-      singer: 'Justin Bieber',
-      songImage: require('../assets/images/new-songs-1.png')
-    },
-    {
-      id: 12,
-      songTitle: 'What do you Mean?',
-      singer: 'Justin Bieber',
-      songImage: require('../assets/images/new-songs-1.png')
-    }
-
   ]
+
+  const navigation = useNavigation();
   return (
     <View style={styles.listContainer}>
       <View style={styles.listContainerWrapper}>
         <FlatList
           data={tempData}
           keyExtractor={(_item, index) => index.toString()}
-          renderItem={({ item }) => <SongCard data={item} />}
+          renderItem={({ item }) => <SongCard data={item} navigation={navigation} />}
         />
       </View>
     </View>
   )
 }
 
-const SongCard = ({ data }) => (
-  <View style={styles.cardContainer}>
+const SongCard = ({ data, navigation }) => (
+  <TouchableOpacity style={styles.cardContainer} onPress={() => navigation.navigate('MusicPlayerScreen', data)}>
     <View style={styles.cardNumberContainer}>
       <H6 customStyle={{ opacity: 1 }}>{data.id}</H6>
     </View>
@@ -108,13 +82,13 @@ const SongCard = ({ data }) => (
       />
     </View>
     <View style={styles.cardSongDescription}>
-      <View>
+      <View style={{ width: '80%' }}>
         <H5>{data.songTitle}</H5>
         <H6 customStyle={{ fontFamily: FONTS.OpenSansLight }}>{data.singer}</H6>
       </View>
       <Entypo name="dots-three-horizontal" size={24} color={COLORS.primary} />
     </View>
-  </View >
+  </TouchableOpacity >
 )
 
 export default SongsList

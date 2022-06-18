@@ -38,6 +38,7 @@ const CategoryList = () => {
           keyExtractor={(_item, index) => index.toString()}
           renderItem={({ item, index }) => <CategoryCard data={item} index={index} />}
           horizontal={true}
+          pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
         />
       </View>
@@ -47,7 +48,7 @@ const CategoryList = () => {
 
 const CategoryCard = ({ data, index }) => {
   return (
-    <View style={[styles.cardContainer, { marginLeft: index === 0 ? 21 : 0 }]}>
+    <View style={[styles.cardContainer]}>
       <H3 customStyle={styles.cardTitle}>{data.headerTitle}</H3>
       <ImageBackground
         source={require('../assets/images/featured-song.png')}
@@ -72,11 +73,8 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingBottom: 6,
   },
-  cardContainer: {
-    paddingRight: 10,
-  },
   cardImage: {
-    width: Dimensions.get('screen').width - 45,
+    width: Dimensions.get('window').width,
     height: 198,
     opacity: .6
   },

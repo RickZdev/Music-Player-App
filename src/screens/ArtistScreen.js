@@ -1,4 +1,4 @@
-import { Dimensions, ImageBackground, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View, Animated } from 'react-native'
+import { Dimensions, ImageBackground, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View, Animated, Platform } from 'react-native'
 import React, { useCallback, useMemo, useRef, useState, } from 'react'
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 import { Feather } from '@expo/vector-icons';
@@ -7,8 +7,9 @@ import COLORS from '../global/COLORS'
 import { H3, H6 } from '../components/CustomHeading';
 import SongsList from '../components/SongsList';
 import FONTS from '../global/FONTS';
+import { CustomBackButton, CustomCloseButton, CustomOpenButton, CustomOptionButton } from '../components/CustomButton';
 
-const ArtistScreen = () => {
+const ArtistScreen = ({ navigation }) => {
   StatusBar.setBackgroundColor('transparent')
   StatusBar.setBarStyle('light-content')
 
@@ -29,15 +30,19 @@ const ArtistScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ArtistHeaderComponent />
+      <ArtistHeaderComponent navigation={navigation} />
       <ArtistSongsComponent scrollRef={scrollRef} width={width} />
       <ArtistAlbumComponent bottomSheetRef={bottomSheetRef} snapPoints={snapPoints} isOpen={isOpen} setIsOpen={setIsOpen} handleCloseBottomSheet={handleCloseBottomSheet} handleOpenBottomSheet={handleOpenBottomSheet} />
     </View >
   )
 }
 
-const ArtistHeaderComponent = () => (
+const ArtistHeaderComponent = ({ navigation }) => (
   <View style={styles.artistHeaderContainer}>
+    <View style={styles.artistHeaderNavigation}>
+      <CustomBackButton onPress={() => navigation.goBack()} />
+      <CustomOptionButton />
+    </View>
     <ImageBackground
       source={require('../assets/images/artistHeader.png')}
       resizeMode='cover'
@@ -129,11 +134,7 @@ const ArtistAlbumComponent = ({ bottomSheetRef, snapPoints, isOpen, setIsOpen, h
             backgroundStyle={{ backgroundColor: COLORS.background }}
             handleComponent={() => (
               <View style={styles.handleContainer}>
-                {
-                  <TouchableOpacity style={styles.handleClose} onPress={handleCloseBottomSheet}>
-                    <Feather name={"arrow-down"} size={18} color="white" />
-                  </TouchableOpacity>
-                }
+                <CustomCloseButton onPress={handleCloseBottomSheet} />
               </View>
             )}
           >
@@ -143,9 +144,7 @@ const ArtistAlbumComponent = ({ bottomSheetRef, snapPoints, isOpen, setIsOpen, h
               </View>
             </ScrollView>
           </BottomSheet>
-          : <TouchableOpacity style={styles.handleOpen} onPress={() => handleOpenBottomSheet(0)}>
-            <Feather name={"arrow-up"} size={18} color="white" />
-          </TouchableOpacity>
+          : <CustomOpenButton onPress={() => handleOpenBottomSheet(0)} />
       }
     </>
   )
@@ -160,6 +159,16 @@ const styles = StyleSheet.create({
   },
   artistHeaderContainer: {
     backgroundColor: COLORS.background
+  },
+  artistHeaderNavigation: {
+    position: 'absolute',
+    zIndex: 999,
+    width: '100%',
+    paddingHorizontal: 30,
+    paddingTop: Platform.OS === 'android' ? 46 : 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   artistHeaderImage: {
     width: Dimensions.get('screen').width,
