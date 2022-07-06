@@ -17,14 +17,14 @@ const MusicPlayerScreen = ({ route, navigation }) => {
       songTitle: 'Marlboro Black',
       singer: 'Because',
       songImage: require('../assets/images/new-songs-1.png'),
-      song: 'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act1_shakespeare.mp3'
+      song: 'https://firebasestorage.googleapis.com/v0/b/shopping-app-be469.appspot.com/o/music%2FBecause-Marlboro-Black.mp3?alt=media&token=7bec8107-a106-45ad-bb2f-38dcb2151bf0'
     },
     {
       id: 2,
       songTitle: 'Sandali',
       singer: 'Because',
       songImage: require('../assets/images/new-songs-2.png'),
-      song: 'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act2_shakespeare.mp3'
+      song: 'https://firebasestorage.googleapis.com/v0/b/shopping-app-be469.appspot.com/o/music%2FBecause-Sandali.mp3?alt=media&token=45a74d98-1e36-49c8-8429-da7cbb75970d'
 
     },
     {
@@ -32,7 +32,7 @@ const MusicPlayerScreen = ({ route, navigation }) => {
       songTitle: "Araw-Araw",
       singer: 'Ben&Ben',
       songImage: require('../assets/images/new-songs-3.png'),
-      song: 'http://www.archive.org/download/hamlet_0911_librivox/hamlet_act3_shakespeare.mp3'
+      song: 'https://firebasestorage.googleapis.com/v0/b/shopping-app-be469.appspot.com/o/music%2FBen%26Ben-Araw-Araw.mp3?alt=media&token=1835eb95-8fcb-4869-bee5-4a0b0ed00360'
 
     },
     {
@@ -40,7 +40,7 @@ const MusicPlayerScreen = ({ route, navigation }) => {
       songTitle: 'Kathang-Isip',
       singer: 'Ben&Ben',
       songImage: require('../assets/images/new-songs-1.png'),
-      song: 'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act4_shakespeare.mp3'
+      song: 'https://firebasestorage.googleapis.com/v0/b/shopping-app-be469.appspot.com/o/music%2FBen%26Ben-Kathang-Isip.mp3?alt=media&token=aaee35e0-2e0e-470b-bd13-ecd1acc3faee'
 
     },
     {
@@ -48,14 +48,14 @@ const MusicPlayerScreen = ({ route, navigation }) => {
       songTitle: 'Masyado Pang Maaga',
       singer: 'Ben&Ben',
       songImage: require('../assets/images/new-songs-3.png'),
-      song: 'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act5_shakespeare.mp3'
+      song: 'https://firebasestorage.googleapis.com/v0/b/shopping-app-be469.appspot.com/o/music%2FBen%26Ben-Masyado-Pang-Maaga.mp3?alt=media&token=cbb14b7e-c29c-4e4d-a9e4-513b2e421336'
     },
     {
       id: 6,
       songTitle: 'Sa Susunod Na Habang Buhay',
       singer: 'Ben&Ben',
       songImage: require('../assets/images/new-songs-1.png'),
-      song: 'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act5_shakespeare.mp3'
+      song: 'https://firebasestorage.googleapis.com/v0/b/shopping-app-be469.appspot.com/o/music%2FBen%26Ben-Sa-Susunod-na-Habang-Buhay.mp3?alt=media&token=33d6a042-64a6-46c6-b2ef-610055425090'
     },
   ]
 
@@ -63,26 +63,26 @@ const MusicPlayerScreen = ({ route, navigation }) => {
 
   const [isPlaying, setIsPlaying] = useState(false)
   const [playbackInstance, setPlaybackInstance] = useState(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(data.index)
   const [volume, setVolume] = useState(1.0)
   const [isBuffering, setIsBuffering] = useState(false)
 
   useEffect(() => {
     const setupPlayer = async () => {
       await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
         // interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-        playsInSilentModeIOS: true,
-        // interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
-        shouldDuckAndroid: true,
-        staysActiveInBackground: true,
-        playThroughEarpieceAndroid: true
+        // playsInSilentModeIOS: true,
+        // interruptionModeAndroid: INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        // shouldDuckAndroid: true,
+        // staysActiveInBackground: true,
+        // playThroughEarpieceAndroid: true
       })
 
       loadAudio();
     }
     setupPlayer();
-
+    console.log(currentIndex);
+    setCurrentIndex(prev => prev + 1);
   }, [])
 
   const loadAudio = async () => {
@@ -123,7 +123,10 @@ const MusicPlayerScreen = ({ route, navigation }) => {
   const handleNextTrack = async () => {
     if (playbackInstance) {
       await playbackInstance.unloadAsync()
+      console.log('current index', currentIndex);
       currentIndex < tempData.length - 1 ? setCurrentIndex(prev => prev += 1) : setCurrentIndex(0)
+      console.log('now index', currentIndex);
+      console.log('templength:', tempData.length - 1)
     }
 
     loadAudio()
@@ -156,15 +159,22 @@ const MusicPlayerScreen = ({ route, navigation }) => {
               style={styles.musicPlayerDiscGlow}
             />
             <Image
-              source={data.songImage}
+              source={tempData[currentIndex === 0 || currentIndex > tempData.length - 1 ? 0 : currentIndex - 1].songImage}
               resizeMode='contain'
               style={[styles.musicPlayerDiscImage, { position: 'relative', zIndex: 1 }]}
             />
 
           </View>
           <View style={styles.musicPlayerDescription}>
-            <H3 customStyle={{ textAlign: 'center' }}>{data.songTitle}</H3>
-            <H5 customStyle={{ opacity: 0.5, marginTop: 15 }}>{data.singer}</H5>
+            {currentIndex === tempData.length - 1 ?
+              (<>
+                <H3 customStyle={{ textAlign: 'center' }}>{tempData[currentIndex === [tempData.length - 1]].songTitle}</H3>
+                <H5 customStyle={{ opacity: 0.5, marginTop: 15 }}>{tempData[currentIndex === [tempData.length - 1]].singer}</H5></>) :
+              (<>
+                <H3 customStyle={{ textAlign: 'center' }}>{tempData[currentIndex === 0 ? 0 : currentIndex - 1].songTitle}</H3>
+                <H5 customStyle={{ opacity: 0.5, marginTop: 15 }}>{tempData[currentIndex === 0 ? 0 : currentIndex - 1].singer}</H5>
+              </>)
+            }
           </View>
           <View style={styles.musicPlayerProgressContainer}>
             <Slider

@@ -25,7 +25,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.rickzdev.musicplayerapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"

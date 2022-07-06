@@ -13,45 +13,36 @@ const SongsList = () => {
       songTitle: 'Marlboro Black',
       singer: 'Because',
       songImage: require('../assets/images/new-songs-1.png'),
-      song: require('../assets/music/Because-Marlboro-Black.mp3')
     },
     {
       id: 2,
       songTitle: 'Sandali',
       singer: 'Because',
       songImage: require('../assets/images/new-songs-2.png'),
-      song: require('../assets/music/Because-Sandali.mp3')
-
     },
     {
       id: 3,
       songTitle: "Araw-Araw",
       singer: 'Ben&Ben',
       songImage: require('../assets/images/new-songs-3.png'),
-      song: require('../assets/music/Ben&Ben-Araw-Araw.mp3')
-
     },
     {
       id: 4,
       songTitle: 'Kathang-Isip',
       singer: 'Ben&Ben',
       songImage: require('../assets/images/new-songs-1.png'),
-      song: require('../assets/music/Ben&Ben-Kathang-Isip.mp3')
-
     },
     {
       id: 5,
       songTitle: 'Masyado Pang Maaga',
       singer: 'Ben&Ben',
       songImage: require('../assets/images/new-songs-3.png'),
-      song: require('../assets/music/Ben&Ben-Masyado-Pang-Maaga.mp3')
     },
     {
       id: 6,
       songTitle: 'Sa Susunod Na Habang Buhay',
       singer: 'Ben&Ben',
       songImage: require('../assets/images/new-songs-1.png'),
-      song: require('../assets/music/Ben&Ben-Sa-Susunod-na-Habang-Buhay.mp3')
     },
   ]
 
@@ -61,16 +52,16 @@ const SongsList = () => {
       <View style={styles.listContainerWrapper}>
         <FlatList
           data={tempData}
-          keyExtractor={(_item, index) => index.toString()}
-          renderItem={({ item }) => <SongCard data={item} navigation={navigation} />}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item, index }) => <SongCard data={item} index={index} navigation={navigation} />}
         />
       </View>
     </View>
   )
 }
 
-const SongCard = ({ data, navigation }) => (
-  <TouchableOpacity style={styles.cardContainer} onPress={() => navigation.navigate('MusicPlayerScreen', data)}>
+const SongCard = ({ data, index, navigation }) => (
+  <TouchableOpacity style={styles.cardContainer} onPress={() => navigation.navigate('MusicPlayerScreen', { ...data, index })}>
     <View style={styles.cardNumberContainer}>
       <H6 customStyle={{ opacity: 1 }}>{data.id}</H6>
     </View>
